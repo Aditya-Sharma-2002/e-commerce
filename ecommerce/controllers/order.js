@@ -36,8 +36,8 @@ exports.create = (req, res) => {
         // order.products.length
         // order.amount
         const emailData = {
-            to: 'adityasharma21902@gmail.com',
-            from: 'adityasharma21902@gmail.com',
+            to: process.env.USER,
+            from: process.env.USER,
             subject: `A new order is received`,
             html: `
             <p>Customer name:</p>

@@ -52,7 +52,7 @@ exports.sendOrder = (req, res, next) => {
     });
 
     let mailOptions = {
-        from: "adityasharma21902@gmail.com",
+        from: process.env.USER,
         to: `${req.body.email}`,        
         subject: "Order for Inventory",
         html: `${output}`
