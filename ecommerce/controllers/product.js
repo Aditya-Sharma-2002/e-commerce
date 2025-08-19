@@ -9,7 +9,6 @@ exports.productById = (req, res, next, id) => {
         .populate('category')
         .populate('supplier')
         .exec((err, product) => {
-            console.log(product);
             if (err || !product) {
                 return res.status(400).json({
                     error: 'Product not found'
@@ -21,35 +20,14 @@ exports.productById = (req, res, next, id) => {
 };
 
 exports.read = (req, res) => {
-    // console.log(req.product);
     req.product.photo = undefined;
     return res.json(req.product);
 };
 
 exports.create = (req, res) => {
-    // console.log(req);
-    // console.log(req.body);
-    
     let form = new formidable.IncomingForm();
-    form.keepExtensions = true;
-    // let name, supplier, description, price, category, shipping, quantity;
-    
-    // form.parse(req, (err, fields, files) => {
-    //     // console.log(fields);
-    //     name = fields.name;
-    //     supplier = fields.supplier;
-    //     description = fields.description;
-    //     price = fields.price;
-    //     category = fields.category;
-    //     shipping = fields.shipping;
-    //     quantity = fields.quantity;
-        
-        
-    // });        
-
+    form.keepExtensions = true;    
     form.parse(req, (err, fields, files) => {
-        // console.log(fields);
-
         if (err) {
             return res.status(400).json({
                 error: 'Image could not be uploaded'
@@ -94,27 +72,15 @@ exports.create = (req, res) => {
                 });
             }
             else{
-                console.log(prod);
                 return res.status(400).json({
                     error: 'Product already exists'
                 });
             }
         });
-
-        // product.save((err, result) => {
-        //     if (err) {
-        //         console.log('PRODUCT CREATE ERROR ', err);
-        //         return res.status(400).json({
-        //             error: errorHandler(err)
-        //         });
-        //     }
-        //     res.json(result);
-        // });
     });
 };
 
 exports.createSize = (req, res) => {
-    console.log(req.body);
     let form = new formidable.IncomingForm();
     form.keepExtensions = true;
     form.parse(req, (err, fields, files) => {
@@ -356,7 +322,6 @@ exports.listSearch = (req, res) => {
 
 exports.decreaseQuantity = (req, res, next) => {
     console.log("Decrease quantity");
-    // console.log(req.body.order.products);
     if(req.body.order.products.sold > req.body.order.products.quantity){
         console.log("Not enough stock");
         return res.status(400).json({

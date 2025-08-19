@@ -21,8 +21,7 @@ exports.orderById = (req, res, next, id) => {
         });
 };
 
-exports.create = (req, res) => {
-    console.log('CREATE ORDER: ', req.body);
+exports.create = (req, res) => {    
     req.body.order.user = req.profile;
     const order = new Order(req.body.order);
     order.save((error, data) => {
@@ -84,11 +83,6 @@ exports.fromTo = (req, res) => {
     const { selectedDateFrom, selectedDateTo } = req.body;
     from = moment(selectedDateFrom).format('DD MM YYYY');
     to = moment(selectedDateTo).format('DD MM YYYY');
-
-    
-    console.log(from);
-    console.log(to);
-    
     let result = [];
     Order.find()
     .populate('user', '_id name address phone')
@@ -106,7 +100,6 @@ exports.fromTo = (req, res) => {
             }            
         }
         result.shift();
-        console.log(result);
         return res.status(200).json({
             result : result
         })

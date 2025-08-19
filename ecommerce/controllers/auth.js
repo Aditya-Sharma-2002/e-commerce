@@ -6,7 +6,6 @@ const nodemailer = require('nodemailer');
 
 // using promise
 exports.signup = (req, res) => {
-    console.log(req.body);
     const user = new User(req.body);
     user.save((err, user) => {
         if (err) {
@@ -32,7 +31,6 @@ exports.checkSignup = (req, res) => {
             })
         }
         else{
-            console.log("User found");
             return res.status(400).json({
                 error: `Email already exists`
             });
@@ -77,7 +75,6 @@ exports.requireSignin = expressJwt({
 });
 
 exports.isAuth = (req, res, next) => {
-    // console.log(req.body);
     let user = req.profile && req.auth && req.profile._id == req.auth._id;
     if (!user) {
         return res.status(403).json({
@@ -98,7 +95,6 @@ exports.isAdmin = (req, res, next) => {
 
 exports.forgot = (req, res, next) => {
     const email = req.body;
-    console.log(email);
     User.findOne({ email }, (err, user) => {
         if (err || !user) {
             console.log(err);            
@@ -113,9 +109,7 @@ exports.forgot = (req, res, next) => {
 };
 
 exports.otp = (req, res, next) => {    
-    console.log(req.body);
     const otp = Math.round(Math.random()*9999)
-    // console.log(otp);
     const output = `
     <h3>OTP for SIGN UP ${otp}</h3>
     `;
